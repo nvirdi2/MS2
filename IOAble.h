@@ -25,4 +25,4 @@ namespace sdds {
     std::istream& operator>>(std::istream& L, IOAble& Object);
     std::ostream& operator<<(std::ostream& L, const IOAble& Object);
 }
-#endif
+#endif //!SDDS_IOABLE_H
