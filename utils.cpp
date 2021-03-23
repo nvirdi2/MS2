@@ -60,7 +60,7 @@ namespace sdds
     }
 
 
-    /*int getInt(const char *prompt)
+    int getInt(const char *prompt)
     {
         string UserInput;
 
@@ -112,63 +112,7 @@ namespace sdds
                                 Flag = false;
                             }
         } return atoi(UserInput.c_str());
-    }*/
-    int getInt(const char* prompt) {
-        int check = 0;
-        bool num_found = false;
-        int num;
-
-        if (prompt != nullptr)
-            cout << prompt;
-        string line;
-        getline(cin, line);
-        line = line + '\n';
-        bool neg = false;
-
-        while (check == 0 || check == 1) {
-            num = 0;
-            int i = 0;
-            neg = false;
-            num_found = false;
-            while (line[i]) {
-                if (line[i] == '-')
-                    neg = true;
-                else if (line[i] < '0' || line[i] > '9') {
-                    if (num_found == false) {
-                        cout << "Oye Hoye: " << line[i] << endl;
-                        check = 0;
-                    }
-
-                    else if (line[i] == '\n')
-                        check = 2;
-                    else
-                        check = 1;
-                    break;
-                }
-
-                else {
-                    num_found = true;
-                    num = num * 10 + line[i] - '0';
-                }
-
-                i++;
-            }
-
-            if (neg)
-                num = 1 * num;
-            if (check != 2) {
-                if (check == 0)
-                    cout << "Bad integer value, try again: ";
-                else
-                    cout << "Enter only an integer, try again: ";
-                getline(cin, line);
-                line = line + '\n';
-            }
-        }
-
-        return num;
     }
-
 
     char *getcstr(const char *prompt, istream &istr, char delimiter)
     {
@@ -190,7 +134,7 @@ namespace sdds
         return cstr;
     }
 
-    int getInt(int min, int max, const char *prompt, const char *errorMessage, bool showRangeAtError)
+    /*int getInt(int min, int max, const char *prompt, const char *errorMessage, bool showRangeAtError)
     {
         bool flag{true};
         int inputFromUser = getInt(prompt);
@@ -221,5 +165,71 @@ namespace sdds
                 inputFromUser = getInt();
             }
         } return inputFromUser;
+    }*/
+    
+    int getInt(int min, int max, const char* prompt, const char* errorMessage, bool showRangeAtError) {
+
+        int check = 0;
+        bool num_found = false;
+        int num;
+
+        if (prompt != nullptr)
+            cout << prompt;
+        string line;
+        getline(cin, line);
+        line = line + '\n';
+        bool neg = false;
+
+        while (check == 0 || check == 1) {
+            neg = false;
+            num = 0;
+            int i = 0;
+            num_found = false;
+
+            while (line[i]) {
+                if (line[i] == '-')
+                    neg = true;
+                else if (line[i] < '0' || line[i] > '9') {
+                    if (num_found == false)
+                        check = 0;
+                    else if (line[i] == '\n')
+                        check = 2;
+                    else
+                        check = 1;
+                    break;
+                }
+
+                else {
+                    num_found = true;
+                    num = num * 10 + line[i] - '0';
+                }
+
+                i++;
+            }
+
+            if (neg)
+                num = -1 * num;
+            if (check != 2) {
+                if (check == 0)
+                    cout << "Bad integer value, try again: ";
+                else
+                    cout << "Enter only an integer, try again: ";
+                getline(cin, line);
+                line = line + '\n';
+            }
+
+            else if (num < min || num > max) {
+                check = 1;
+                if (errorMessage != nullptr)
+                    cout << errorMessage;
+                if (showRangeAtError) {
+                    cout << "[" << min << " <= value <= " << max << "]: ";
+                }
+
+                getline(cin, line);
+                line = line + '\n';
+            }
+        }
+        return num;
     }
 }
