@@ -62,59 +62,79 @@ namespace sdds
 
     int getInt(const char *prompt)
     {
-      int check = 0;
-        bool num_found = false;
-        int num;
+        int flag = 0;
+        bool UserIn = false;
+        int number;
 
-        if (prompt != nullptr)
-            cout << prompt;
-        string line;
-        getline(cin, line);
-        line = line + '\n';
-        bool neg = false;
+            if (prompt != nullptr)
+            {   
+                cout << prompt;
+            }
 
-        while (check == 0 || check == 1) {
-            num = 0;
-            int i = 0;
-            neg = false;
-            num_found = false;
-            while (line[i]) {
-                if (line[i] == '-')
-                    neg = true;
-                else if (line[i] < '0' || line[i] > '9') {
-                    if (num_found == false) {
-                        cout << "Oye Hoye: " << line[i] << endl;
-                        check = 0;
+        string x;
+        getline(cin, x);
+        x = x + '\n';
+
+            bool InvalidIn = false;
+
+        while (flag == 0 || flag == 1) 
+        {
+            number = 0;
+            int l = 0;
+            InvalidIn = false;
+            UserIn = false;
+            while (x[l]) 
+            {
+                if (x[l] == '-')
+                {
+                    InvalidIn = true;
+                }
+                else if (x[l] < '0' || x[l] > '9') 
+                {
+                    if (UserIn == false) 
+                    {
+                        cout << "Oye Hoye: " << x[l] << endl;
+                            flag = 0;
                     }
 
-                    else if (line[i] == '\n')
-                        check = 2;
+                    else if (x[l] == '\n')
+                    {
+                        flag = 2;
+                    }
                     else
-                        check = 1;
-                    break;
+                    {
+                        flag = 1;
+                    }
+                        break;
                 }
 
-                else {
-                    num_found = true;
-                    num = num * 10 + line[i] - '0';
+                else 
+                {
+                    UserIn = true;
+                    number = number * 10 + x[l] - '0';
                 }
 
-                i++;
+                l++;
             }
 
-            if (neg)
-                num = 1 * num;
-            if (check != 2) {
-                if (check == 0)
+            if (InvalidIn)
+            {
+                number = 1 * number;
+            }
+            if (flag != 2) 
+            {
+                if (flag == 0)
+                {
                     cout << "Bad integer value, try again: ";
+                }
                 else
+                {
                     cout << "Enter only an integer, try again: ";
-                getline(cin, line);
-                line = line + '\n';
+                }
+                    getline(cin, x);
+                x = x + '\n';
             }
-        }
-
-        return num;
+        } return number;
     }
 
 
@@ -140,67 +160,102 @@ namespace sdds
 
     int getInt(int min, int max, const char* prompt, const char* errorMessage, bool showRangeAtError) 
     {
-         int check = 0;
-        bool num_found = false;
-        int num;
+        int flag = 0;
+        bool UserIn = false;
+        int number;
 
-        if (prompt != nullptr)
-            cout << prompt;
-        string line;
-        getline(cin, line);
-        line = line + '\n';
-        bool neg = false;
+            if (prompt != nullptr)
+            {   
+                cout << prompt;
+            }
 
-        while (check == 0 || check == 1) {
-            neg = false;
-            num = 0;
-            int i = 0;
-            num_found = false;
+        string i;
+        getline(cin, i);
+        i = i + '\n';
 
-            while (line[i]) {
-                if (line[i] == '-')
-                    neg = true;
-                else if (line[i] < '0' || line[i] > '9') {
-                    if (num_found == false)
-                        check = 0;
-                    else if (line[i] == '\n')
-                        check = 2;
+        bool InvalidIN = false;
+
+        while (flag == 0 || flag == 1) 
+        {
+            InvalidIN = false;
+            number = 0;
+            int x = 0;
+            UserIn = false;
+
+            while (i[x]) 
+            {
+                if (i[x] == '-')
+                {
+                    InvalidIN = true;
+                }
+
+                else if (i[x] < '0' || i[x] > '9') 
+                {
+
+                    if (UserIn == false)
+                    {
+                        flag = 0;
+                    }
+
+                    else if (i[x] == '\n')
+                    {   
+                        flag = 2;
+                    }
+
                     else
-                        check = 1;
+                    {
+                        flag = 1;
+                    }
+
                     break;
                 }
 
-                else {
-                    num_found = true;
-                    num = num * 10 + line[i] - '0';
+                else 
+                {
+                    UserIn = true;
+                    number = number * 10 + i[x] - '0';
+                }
+                x++;
+            }
+
+            if (InvalidIN)
+            {
+                number = -1 * number;
+            }
+
+            if (flag != 2) 
+            {
+                if (flag == 0)
+                {
+                    cout << "Bad integer value, try again: ";
                 }
 
-                i++;
-            }
-
-            if (neg)
-                num = -1 * num;
-            if (check != 2) {
-                if (check == 0)
-                    cout << "Bad integer value, try again: ";
                 else
+                {
                     cout << "Enter only an integer, try again: ";
-                getline(cin, line);
-                line = line + '\n';
+                }
+                
+                getline(cin, i);
+                    i = i + '\n';
             }
 
-            else if (num < min || num > max) {
-                check = 1;
+            else if (number < min || number > max) 
+            {
+                flag = 1;
+
                 if (errorMessage != nullptr)
+                {
                     cout << errorMessage;
-                if (showRangeAtError) {
+                }
+
+                if (showRangeAtError) 
+                {
                     cout << "[" << min << " <= value <= " << max << "]: ";
                 }
-
-                getline(cin, line);
-                line = line + '\n';
+                
+                getline(cin, i);
+                    i = i + '\n';
             }
-        }
-        return num;
+        } return number;
     }
 }
