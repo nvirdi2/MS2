@@ -62,7 +62,60 @@ namespace sdds
 
     int getInt(const char *prompt)
     {
-        string UserInput;
+            number = 0;
+            InvaildUserInput = false;
+            UserInput = false;
+
+            while (x[l]) 
+            {
+                if (x[l] == '-')
+                    InvaildUserInput = true;
+                else if (x[l] < '0' || x[l] > '9') 
+                {
+                    if (UserInput == false)
+                        flag = 0;
+                    else if (x[l] == '\n')
+                        flag = 2;
+                    else
+                        flag = 1;
+                    break;
+                }
+
+                else 
+                {
+                    UserInput = true;
+                    number = number * 10 + x[l] - '0';
+                }
+
+                l++;
+            }
+
+            if (InvaildUserInput)
+                number = -1 * number;
+            if (flag != 2) 
+            {
+                if (flag == 0)
+                    cout << "Bad integer value, try again: ";
+                else
+                    cout << "Enter only an integer, try again: ";
+                getline(cin, x);
+                x = x + '\n';
+            }
+
+            else if (number < min || number > max) 
+            {
+                flag = 1;
+                if (errorMessage != nullptr)
+                    cout << errorMessage;
+                if (showRangeAtError) {
+                    cout << "[" << min << " <= value <= " << max << "]: ";
+                }
+
+                getline(cin, x);
+                x = x + '\n';
+            } return number;
+        }
+        /*string UserInput;
 
         unsigned x;
 
@@ -111,8 +164,8 @@ namespace sdds
                             {
                                 Flag = false;
                             }
-        } return atoi(UserInput.c_str());
-    }
+        } return atoi(UserInput.c_str());*/
+    //}
 
     char *getcstr(const char *prompt, istream &istr, char delimiter)
     {
