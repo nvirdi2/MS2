@@ -62,76 +62,59 @@ namespace sdds
 
     int getInt(const char *prompt)
     {
-        int flag = 0;
-        bool UserInput = false;
-        int number;
-        int l = 0;
+      int check = 0;
+        bool num_found = false;
+        int num;
 
         if (prompt != nullptr)
             cout << prompt;
+        string line;
+        getline(cin, line);
+        line = line + '\n';
+        bool neg = false;
 
-        string x;
+        while (check == 0 || check == 1) {
+            num = 0;
+            int i = 0;
+            neg = false;
+            num_found = false;
+            while (line[i]) {
+                if (line[i] == '-')
+                    neg = true;
+                else if (line[i] < '0' || line[i] > '9') {
+                    if (num_found == false) {
+                        cout << "Oye Hoye: " << line[i] << endl;
+                        check = 0;
+                    }
 
-        getline(cin, x);
-        x = x + '\n';
-
-        bool InvaildUserInput = false;
-
-        while (flag == 0 || flag == 1) 
-        {
-            number = 0;
-            InvaildUserInput = false;
-            UserInput = false;
-
-            while (x[l]) 
-            {
-                if (x[l] == '-')
-                    InvaildUserInput = true;
-                else if (x[l] < '0' || x[l] > '9') 
-                {
-                    if (UserInput == false)
-                        flag = 0;
-                    else if (x[l] == '\n')
-                        flag = 2;
+                    else if (line[i] == '\n')
+                        check = 2;
                     else
-                        flag = 1;
+                        check = 1;
                     break;
                 }
 
-                else 
-                {
-                    UserInput = true;
-                    number = number * 10 + x[l] - '0';
+                else {
+                    num_found = true;
+                    num = num * 10 + line[i] - '0';
                 }
 
-                l++;
+                i++;
             }
 
-            if (InvaildUserInput)
-                number = -1 * number;
-            if (flag != 2) 
-            {
-                if (flag == 0)
+            if (neg)
+                num = 1 * num;
+            if (check != 2) {
+                if (check == 0)
                     cout << "Bad integer value, try again: ";
                 else
                     cout << "Enter only an integer, try again: ";
-                getline(cin, x);
-                x = x + '\n';
+                getline(cin, line);
+                line = line + '\n';
             }
+        }
 
-            else if (number < min || number > max) 
-            {
-                flag = 1;
-                if (errorMessage != nullptr)
-                    cout << errorMessage;
-                if (showRangeAtError) {
-                    cout << "[" << min << " <= value <= " << max << "]: ";
-                }
-
-                getline(cin, x);
-                x = x + '\n';
-            }
-        } return number;
+        return num;
     }
 
 
@@ -157,76 +140,67 @@ namespace sdds
 
     int getInt(int min, int max, const char* prompt, const char* errorMessage, bool showRangeAtError) 
     {
-
-        int flag = 0;
-        bool UserInput = false;
-        int number;
-        int l = 0;
+         int check = 0;
+        bool num_found = false;
+        int num;
 
         if (prompt != nullptr)
             cout << prompt;
+        string line;
+        getline(cin, line);
+        line = line + '\n';
+        bool neg = false;
 
-        string x;
+        while (check == 0 || check == 1) {
+            neg = false;
+            num = 0;
+            int i = 0;
+            num_found = false;
 
-        getline(cin, x);
-        x = x + '\n';
-
-        bool InvaildUserInput = false;
-
-        while (flag == 0 || flag == 1) 
-        {
-            number = 0;
-            InvaildUserInput = false;
-            UserInput = false;
-
-            while (x[l]) 
-            {
-                if (x[l] == '-')
-                    InvaildUserInput = true;
-                else if (x[l] < '0' || x[l] > '9') 
-                {
-                    if (UserInput == false)
-                        flag = 0;
-                    else if (x[l] == '\n')
-                        flag = 2;
+            while (line[i]) {
+                if (line[i] == '-')
+                    neg = true;
+                else if (line[i] < '0' || line[i] > '9') {
+                    if (num_found == false)
+                        check = 0;
+                    else if (line[i] == '\n')
+                        check = 2;
                     else
-                        flag = 1;
+                        check = 1;
                     break;
                 }
 
-                else 
-                {
-                    UserInput = true;
-                    number = number * 10 + x[l] - '0';
+                else {
+                    num_found = true;
+                    num = num * 10 + line[i] - '0';
                 }
 
-                l++;
+                i++;
             }
 
-            if (InvaildUserInput)
-                number = -1 * number;
-            if (flag != 2) 
-            {
-                if (flag == 0)
+            if (neg)
+                num = -1 * num;
+            if (check != 2) {
+                if (check == 0)
                     cout << "Bad integer value, try again: ";
                 else
                     cout << "Enter only an integer, try again: ";
-                getline(cin, x);
-                x = x + '\n';
+                getline(cin, line);
+                line = line + '\n';
             }
 
-            else if (number < min || number > max) 
-            {
-                flag = 1;
+            else if (num < min || num > max) {
+                check = 1;
                 if (errorMessage != nullptr)
                     cout << errorMessage;
                 if (showRangeAtError) {
                     cout << "[" << min << " <= value <= " << max << "]: ";
                 }
 
-                getline(cin, x);
-                x = x + '\n';
+                getline(cin, line);
+                line = line + '\n';
             }
-        } return number;
+        }
+        return num;
     }
 }
