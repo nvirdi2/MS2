@@ -139,7 +139,6 @@ int getInt(int min, int max, const char* prompt, const char* errorMessage, bool 
         int flag = 0;
         bool UserInput = false;
         int number;
-        InvaildUserInput = false;
         int l = 0;
 
         if (prompt != nullptr)
@@ -155,7 +154,7 @@ int getInt(int min, int max, const char* prompt, const char* errorMessage, bool 
         while (flag == 0 || flag == 1) 
         {
             number = 0;
-            
+            InvaildUserInput = false;
             UserInput = false;
 
             while (x[l]) 
