@@ -62,6 +62,23 @@ namespace sdds
 
     int getInt(const char *prompt)
     {
+        int flag = 0;
+        bool UserInput = false;
+        int number;
+        int l = 0;
+
+        if (prompt != nullptr)
+            cout << prompt;
+
+        string x;
+
+        getline(cin, x);
+        x = x + '\n';
+
+        bool InvaildUserInput = false;
+
+        while (flag == 0 || flag == 1) 
+        {
             number = 0;
             InvaildUserInput = false;
             UserInput = false;
@@ -113,59 +130,10 @@ namespace sdds
 
                 getline(cin, x);
                 x = x + '\n';
-            } return number;
-        }
-        /*string UserInput;
-
-        unsigned x;
-
-        bool Flag{true};
-        bool notInteger;
-        bool Integerv;
-
-        if (prompt != nullptr)
-        {
-            cout << prompt;
-        }
-
-        getline(cin, UserInput);
-
-        while (Flag)
-        {
-            Integerv = false;
-            notInteger = false;
-
-            if (!isdigit(UserInput.c_str()[0]))
-            {
-                Integerv = true;
             }
+        } return number;
+    }
 
-                for (x = 0; x < UserInput.length() && !Integerv && !notInteger; x++)
-                {
-                    if (!isdigit(UserInput.c_str()[x]) && x != 0)
-                    {
-                        notInteger = true;
-                    }
-                }
-            
-                    if (Integerv)
-                    {
-                        cout << "Bad integer value, try again: ";
-                        getline(cin, UserInput);
-                    }
-            
-                        if (notInteger)
-                        {
-                            cout << "Enter only an integer, try again: ";
-                            getline(cin, UserInput);
-                        }
-                            
-                            if (!Integerv && !notInteger)
-                            {
-                                Flag = false;
-                            }
-        } return atoi(UserInput.c_str());*/
-    //}
 
     char *getcstr(const char *prompt, istream &istr, char delimiter)
     {
@@ -187,7 +155,8 @@ namespace sdds
         return cstr;
     }
 
-int getInt(int min, int max, const char* prompt, const char* errorMessage, bool showRangeAtError) {
+    int getInt(int min, int max, const char* prompt, const char* errorMessage, bool showRangeAtError) 
+    {
 
         int flag = 0;
         bool UserInput = false;
